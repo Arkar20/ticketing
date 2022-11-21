@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/api/user/currentuser", (req, res) => {
+app.get("/api/users/currentuser", (req, res) => {
   return res.send("Current User");
 });
 
