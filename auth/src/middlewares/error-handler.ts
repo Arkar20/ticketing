@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import DatabaseConnectionError from "../error/DatabaseConnectionError";
 
 export const errorHandler = (
   err: Error,
@@ -6,8 +7,11 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  return res.json({
-    type: "Unknown",
-    msg: "Something went wrong",
-  });
+  if (err instanceof DatabaseConnectionError) {
+    const error = new DatabaseConnectionError();
+    return res.json({
+      type: error.type,
+      msg: error.reason,
+    });
+  }
 };
