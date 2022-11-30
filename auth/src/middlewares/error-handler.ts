@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import DatabaseConnectionError from "../error/DatabaseConnectionError";
+import ErrorHandler from "../error/ErrorHandler";
 
 export const errorHandler = (
   err: Error,
@@ -7,11 +7,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  if (err instanceof DatabaseConnectionError) {
-    const error = new DatabaseConnectionError();
-    return res.json({
-      type: error.type,
-      msg: error.reason,
-    });
+  if (err instanceof ErrorHandler) {
+    return err.seralize();
   }
 };
