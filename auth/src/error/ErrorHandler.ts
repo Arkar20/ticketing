@@ -7,7 +7,7 @@ abstract class ErrorHandler extends Error {
     Object.setPrototypeOf(this, ErrorHandler.prototype);
   }
 
-  abstract seralize();
+  abstract seralize(): { message: string }[];
 }
 
 export default ErrorHandler;

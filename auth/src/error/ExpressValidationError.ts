@@ -10,7 +10,7 @@ class ExpressValidationError extends ErrorHandler {
 
   seralize() {
     return this.errors.map((err) => {
-      return { message: err.msg, field: err.param };
+      return { message: err.msg };
     });
   }
 }
