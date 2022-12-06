@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import PasswordGenerator from "../services/password";
 
 //for attrs that require to pass
 interface UserAttrs {
@@ -29,8 +30,18 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model<UserDoc, UserModal>("User", UserSchema);
 
+UserSchema.pre("save", function (next) {
+  console.log("hashing password");
+  if (this.isModified("password")) {
+    const hashPassword = PasswordGenerator.toHash(this.get("password"));
+
+    this.set("password", hashPassword);
+  }
+  next();
+});
+
 UserSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
 
-export default { User };
+export { User };
