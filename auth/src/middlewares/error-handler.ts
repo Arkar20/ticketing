@@ -8,6 +8,7 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   if (err instanceof ErrorHandler) {
-    return err.seralize();
+    return res.status(500).json(err.seralize());
   }
+  return res.status(500).send("Something went wrong");
 };

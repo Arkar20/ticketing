@@ -1,9 +1,11 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import DatabaseConnectionError from "../error/DatabaseConnectionError";
 import { User } from "../models";
-const router = express.Router();
 
+import ExpressValidationError from "../error/ExpressValidationError";
+import BadRequest from "../error/BadRequest";
+const router = express.Router();
+import "express-async-errors";
 router.post(
   "/api/users/signup",
   [
@@ -19,16 +21,16 @@ router.post(
     const { email, password } = req.body;
 
     if (!errors.isEmpty()) {
-      console.log(errors.array());
-      throw Error("something went wrong");
+      throw new ExpressValidationError(errors.array());
     }
 
-    if (await User.findOne({ email })) {
-      return res.send("User Email Exists");
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      throw new BadRequest("Email Has Already Exited");
     }
+
     console.log("Creating a user...");
-    const user = await User.build({ email, password });
-    user.save();
+    const user = await User.build({ email, password }).save();
 
     return res.json(user);
   }

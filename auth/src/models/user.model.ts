@@ -28,10 +28,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model<UserDoc, UserModal>("User", UserSchema);
-
 UserSchema.pre("save", function (next) {
-  console.log("hashing password");
   if (this.isModified("password")) {
     const hashPassword = PasswordGenerator.toHash(this.get("password"));
 
@@ -43,5 +40,7 @@ UserSchema.pre("save", function (next) {
 UserSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
+
+const User = mongoose.model<UserDoc, UserModal>("User", UserSchema);
 
 export { User };
