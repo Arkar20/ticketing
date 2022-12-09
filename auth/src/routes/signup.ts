@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import { User } from "../models";
 import "cookie-session";
-import ExpressValidationError from "../error/ExpressValidationError";
 import BadRequest from "../error/BadRequest";
+import { validationHandler } from "../middlewares";
 
 const router = express.Router();
 import "express-async-errors";
@@ -19,17 +19,12 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must be between 4 and 20 characters"),
   ],
+  validationHandler,
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-
     const { email, password } = req.body;
 
     if (!process.env.JWT_SECRET) {
       throw new BadRequest("JWT Secret Key Not Exists");
-    }
-
-    if (!errors.isEmpty()) {
-      throw new ExpressValidationError(errors.array());
     }
 
     const userExists = await User.findOne({ email });
