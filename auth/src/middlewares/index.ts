@@ -1,4 +1,8 @@
 import { errorHandler } from "./error-handler";
 import { validationHandler } from "./validation-handler";
 import { currentUser } from "./currentUser";
-export { errorHandler, validationHandler, currentUser };
+import { requireAuth } from "./requireAuth";
+
+const auth = [currentUser, requireAuth];
+
+export { errorHandler, validationHandler, currentUser, requireAuth, auth };
