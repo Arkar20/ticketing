@@ -58,3 +58,15 @@ it("accept only unique email", async () => {
     })
     .expect(400);
 });
+
+it("sets the cookie after signup", async () => {
+  const res = await request(app)
+    .post(url)
+    .send({
+      email: "tester@test.com",
+      password: "iam12years",
+    })
+    .expect(201);
+
+  expect(res.get("Set-Cookie")).toBeDefined();
+});
