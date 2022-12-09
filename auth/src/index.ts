@@ -29,6 +29,7 @@ app.use(errorHandler);
 
 async function start() {
   try {
+    mongoose.set("strictQuery", true);
     await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
     console.log("mongo Connected");
   } catch (error) {

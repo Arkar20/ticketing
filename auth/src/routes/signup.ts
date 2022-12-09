@@ -6,6 +6,9 @@ import ExpressValidationError from "../error/ExpressValidationError";
 import BadRequest from "../error/BadRequest";
 const router = express.Router();
 import "express-async-errors";
+
+import jwt from "jsonwebtoken";
+
 router.post(
   "/api/users/signup",
   [
@@ -30,8 +33,13 @@ router.post(
     }
 
     console.log("Creating a user...");
-    const user = await User.build({ email, password }).save();
+    const user = await User.build({ email, password });
+    user.save();
+    const token = jwt.sign({ id: user.id }, "shhhhh");
 
+    req.session = {
+      jwt: token,
+    };
     return res.json(user);
   }
 );
