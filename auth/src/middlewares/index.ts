@@ -1,4 +1,4 @@
 import { errorHandler } from "./error-handler";
 import { validationHandler } from "./validation-handler";
-
-export { errorHandler, validationHandler };
+import { currentUser } from "./currentUser";
+export { errorHandler, validationHandler, currentUser };
