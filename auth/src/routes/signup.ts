@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { User } from "../models";
-
+import "cookie-session";
 import ExpressValidationError from "../error/ExpressValidationError";
 import BadRequest from "../error/BadRequest";
 
