@@ -23,10 +23,6 @@ router.post(
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    if (!process.env.JWT_SECRET) {
-      throw new BadRequest("JWT Secret Key Not Exists");
-    }
-
     const userExists = await User.findOne({ email });
     if (userExists) {
       throw new BadRequest("Email Has Already Exited");
@@ -34,7 +30,7 @@ router.post(
 
     const user = User.build({ email, password });
     await user.save();
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!);
 
     req.session = {
       jwt: token,

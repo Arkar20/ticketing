@@ -19,9 +19,6 @@ router.post(
   ],
   validationHandler,
   async (req: Request, res: Response) => {
-    if (!process.env.JWT_SECRET) {
-      throw new BadRequest("JWT Secret Key Not Exists");
-    }
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
@@ -36,7 +33,7 @@ router.post(
       throw new BadRequest("Invalid Credential");
     }
 
-    const token = jwt.sign({ id: existingUser.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: existingUser.id }, process.env.JWT_SECRET!);
 
     req.session = {
       jwt: token,

@@ -6,6 +6,7 @@ import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 import { errorHandler } from "./middlewares/error-handler";
+import BadRequest from "./error/BadRequest";
 import "express-async-errors";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
@@ -19,6 +20,10 @@ app.use(
     secure: true, //allowing only https
   })
 );
+
+if (!process.env.JWT_SECRET) {
+  throw new BadRequest("JWT Secret Key Not Exists");
+}
 
 app.use(currentUserRouter);
 app.use(signinRouter);
