@@ -4,6 +4,7 @@ import { User } from "../models";
 
 import ExpressValidationError from "../error/ExpressValidationError";
 import BadRequest from "../error/BadRequest";
+
 const router = express.Router();
 import "express-async-errors";
 
@@ -23,6 +24,10 @@ router.post(
 
     const { email, password } = req.body;
 
+    if (!process.env.JWT_SECRET) {
+      throw new BadRequest("JWT Secret Key Not Exists");
+    }
+
     if (!errors.isEmpty()) {
       throw new ExpressValidationError(errors.array());
     }
@@ -35,7 +40,7 @@ router.post(
     console.log("Creating a user...");
     const user = User.build({ email, password });
     await user.save();
-    const token = jwt.sign({ id: user.id }, "shhhhh");
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
     req.session = {
       jwt: token,
