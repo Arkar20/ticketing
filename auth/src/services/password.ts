@@ -6,17 +6,16 @@ const scryptAsync = promisify(scrypt);
 class PasswordGenerator {
   static async toHash(password: string) {
     const salt = randomBytes(8).toString("hex");
+    const buf = (await scryptAsync(password, salt, 64)) as Buffer;
 
-    const buff = (await scryptAsync(password, salt, 16)) as Buffer;
-
-    return `${buff}.${salt}`;
+    return `${buf.toString("hex")}.${salt}`;
   }
+
   static async compare(storedPassword: string, suppliedPassword: string) {
     const [hashedPassword, salt] = storedPassword.split(".");
+    const buf = (await scryptAsync(suppliedPassword, salt, 64)) as Buffer;
 
-    const buff = (await scryptAsync(suppliedPassword, salt, 16)) as Buffer;
-
-    return buff.toString("hex") === hashedPassword;
+    return buf.toString("hex") === hashedPassword;
   }
 }
 export default PasswordGenerator;

@@ -32,7 +32,6 @@ router.post(
       throw new BadRequest("Email Has Already Exited");
     }
 
-    console.log("Creating a user...");
     const user = User.build({ email, password });
     await user.save();
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
