@@ -33,8 +33,8 @@ router.post(
     }
 
     console.log("Creating a user...");
-    const user = await User.build({ email, password });
-    user.save();
+    const user = User.build({ email, password });
+    await user.save();
     const token = jwt.sign({ id: user.id }, "shhhhh");
 
     req.session = {
