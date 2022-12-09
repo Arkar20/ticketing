@@ -35,7 +35,7 @@ router.post(
     req.session = {
       jwt: token,
     };
-    return res.json(user);
+    return res.status(201).json(user);
   }
 );
 
