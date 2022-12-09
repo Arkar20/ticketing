@@ -1,5 +1,6 @@
 abstract class ErrorHandler extends Error {
   abstract type: string;
+  abstract statusCode: number;
 
   constructor() {
     super();
