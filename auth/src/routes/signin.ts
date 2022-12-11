@@ -39,7 +39,7 @@ router.post(
       jwt: token,
     };
 
-    return res.send(existingUser);
+    return res.status(200).send(existingUser);
   }
 );
 
