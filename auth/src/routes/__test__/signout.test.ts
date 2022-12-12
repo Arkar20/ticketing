@@ -2,13 +2,7 @@ import request from "supertest";
 import app from "../../app";
 
 it("can signout", async () => {
-  await request(app)
-    .post("/api/users/signup")
-    .send({
-      email: "tester@test.com",
-      password: "iam12years",
-    })
-    .expect(201);
+  await global.signin();
 
   const response = await request(app).post("/api/users/signout").expect(200);
 
