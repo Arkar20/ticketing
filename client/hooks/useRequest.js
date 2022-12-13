@@ -11,14 +11,28 @@ const useRequest=({url,method,onSuccess})=>{
             onSuccess();
 
         } catch (error) {
+            console.log(error)
             setErrors(error.response.data)
         }
         
     }
 
+    const errorsUI= (
+        <div>
+            {errors.length > 0 && (
+        <ul>
+          {errors.map((error, index) => {
+            return <li id={index}>{error.message}</li>;
+          })}
+        </ul>
+      )}
+        </div>
+    )
+
     return {
         doRequest,
-        errors
+        errors,
+        errorsUI
     }
 
 }
