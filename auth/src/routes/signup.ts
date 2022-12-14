@@ -2,8 +2,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { User } from "../models";
 import "cookie-session";
-import { BadRequest } from "../error";
-import { validationHandler } from "../middlewares";
+import { validationHandler, BadRequest } from "@jeffery_microservice/common";
 
 const router = express.Router();
 import "express-async-errors";

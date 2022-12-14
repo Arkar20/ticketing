@@ -1,5 +1,2 @@
-interface Person {
-    name: String;
-    email: String;
-}
-declare const person: Person;
+export * from "./error";
+export * from "./middlewares";
