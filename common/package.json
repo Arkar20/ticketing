@@ -2,15 +2,15 @@
   "name": "@jeffery_microservice/common",
   "version": "1.0.9",
   "description": "",
-  "main": "/build/index.js",
-  "types": "/build/index.d.ts",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "files": [
     "build/**/*"
   ],
   "scripts": {
     "clean": "del ./build/**/*",
     "build": "npm run clean && tsc",
-    "publish": "git add . && git commit -m \"Update\" && npm version patch && npm publish"
+    "pub": "git add . && git commit -m \"Update\" && npm version patch && npm publish"
   },
   "keywords": [],
   "author": "",
