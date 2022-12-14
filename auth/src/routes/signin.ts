@@ -1,8 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { User } from "../models";
-import { validationHandler } from "../middlewares";
-import { BadRequest } from "../error";
+import { BadRequest, validationHandler } from "@jeffery_microservice/common";
 const router = express.Router();
 import "express-async-errors";
 import PasswordGenerator from "../services/password";

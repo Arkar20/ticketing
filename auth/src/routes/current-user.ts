@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { currentUser } from "../middlewares";
+import { currentUser } from "@jeffery_microservice/common";
 
 import "cookie-session";
 const router = express.Router();
