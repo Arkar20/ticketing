@@ -1,4 +1,4 @@
-import BadRequest from "./error/BadRequest";
+import { BadRequest } from "./error/BadRequest";
 import mongoose from "mongoose";
 import app from "./app";
 

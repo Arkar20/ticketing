@@ -12,4 +12,4 @@ class BadRequest extends ErrorHandler {
   }
 }
 
-export default BadRequest;
+export { BadRequest };

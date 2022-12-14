@@ -13,4 +13,4 @@ class DatabaseConnectionError extends ErrorHandler {
   }
 }
 
-export default DatabaseConnectionError;
+export { DatabaseConnectionError };

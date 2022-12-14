@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { User } from "../models";
 import "cookie-session";
-import BadRequest from "../error/BadRequest";
+import { BadRequest } from "../error";
 import { validationHandler } from "../middlewares";
 
 const router = express.Router();

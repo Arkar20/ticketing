@@ -14,4 +14,4 @@ class ExpressValidationError extends ErrorHandler {
     });
   }
 }
-export default ExpressValidationError;
+export { ExpressValidationError };

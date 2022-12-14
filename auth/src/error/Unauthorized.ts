@@ -11,4 +11,4 @@ class Unauthorize extends ErrorHandler {
     return [{ message: this.reason }];
   }
 }
-export default Unauthorize;
+export { Unauthorize };
