@@ -15,6 +15,8 @@ spec:
       - name: tickets
         image: arkar20/ticketing-tickets
         env:
+          - name: MONGO_URL
+            value: "mongodb://tickets-mongo-srv:27017/tickets"
           - name: JWT_SECRET
             valueFrom:
               secretKeyRef:
