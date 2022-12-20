@@ -3,8 +3,8 @@ import { auth } from "@jeffery_microservice/common";
 
 const ticketRouter = express.Router();
 
-ticketRouter.get("/tickets", auth, (req: Request, res: Response) => {
-  return res.send("api tickets route");
+ticketRouter.post("/tickets", auth, (req: Request, res: Response) => {
+  return res.send(req.currentUser);
 });
 
 export default ticketRouter;

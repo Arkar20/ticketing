@@ -20,6 +20,7 @@ export const currentUser = (
   if (!req.session?.jwt) {
     next();
   }
+
   try {
     var decoded = jwt.verify(req.session?.jwt, process.env.JWT_SECRET!) as
       | UserDecoded
