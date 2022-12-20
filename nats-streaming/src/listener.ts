@@ -8,7 +8,16 @@ const stan = nats.connect("ticketing", randomBytes(4).toString("hex"), {
 stan.on("connect", () => {
   console.log("listener is listening");
 
-  const options = stan.subscriptionOptions().setManualAckMode(true); //to control manually that the event is complete
+  stan.on("close", () => {
+    console.log("Nats connection is closed");
+    process.exit();
+  });
+  const options = stan
+    .subscriptionOptions()
+    .setManualAckMode(true) //to control manually that the event is complete
+    .setDeliverAllAvailable() // all events
+    .setDurableName("ticketing"); // marking the events proceed or not under the name
+
   const subscribe = stan.subscribe(
     "ticket:created",
     "ticket-created-service-group",
@@ -20,3 +29,6 @@ stan.on("connect", () => {
     msg.ack();
   });
 });
+
+process.on("SIGINT", () => stan.close());
+process.on("SIGTERM", () => stan.close());
