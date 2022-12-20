@@ -15,10 +15,9 @@ it("requires to login first", async () => {
 
 it("can create ticket", async () => {
   const tickets = await Ticket.find({});
-
   expect(tickets.length).toEqual(0);
 
-  await request
+  const response = await request
     .agent(app)
     .post("/api/tickets")
     .set("Cookie", global.signin())
@@ -26,4 +25,42 @@ it("can create ticket", async () => {
 
   const ticketsAfterCreate = await Ticket.find({});
   expect(ticketsAfterCreate.length).toEqual(1);
+});
+
+it("returns an error if an invalid title is provided", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({
+      title: "",
+      price: 10,
+    })
+    .expect(400);
+
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({
+      price: 10,
+    })
+    .expect(400);
+});
+
+it("returns an error if an invalid price is provided", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({
+      title: "asldkjf",
+      desc: "",
+    })
+    .expect(400);
+
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({
+      title: "laskdfj",
+    })
+    .expect(400);
 });

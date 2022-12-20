@@ -1,16 +1,27 @@
 import express, { Request, Response } from "express";
-import { auth } from "@jeffery_microservice/common";
+import { auth, validationHandler } from "@jeffery_microservice/common";
 import { Ticket } from "../model";
+import { body } from "express-validator";
 const ticketRouter = express.Router();
 
-ticketRouter.post("/tickets", auth, async (req: Request, res: Response) => {
-  const { title, desc } = req.body;
+ticketRouter.post(
+  "/tickets",
+  auth,
+  [
+    body("title").not().isEmpty().withMessage("Title is required"),
+    body("desc").not().isEmpty().withMessage("Desc is required"),
+  ],
+  validationHandler,
 
-  const user_id = req.currentUser!.id;
+  async (req: Request, res: Response) => {
+    const { title, desc } = req.body;
 
-  const ticket = await Ticket.build({ title, desc, user_id }).save();
+    const user_id = req.currentUser!.id;
 
-  return res.status(201).send(ticket);
-});
+    const ticket = await Ticket.build({ title, desc, user_id }).save();
+
+    return res.status(201).send(ticket);
+  }
+);
 
 export default ticketRouter;
