@@ -42,4 +42,4 @@ abstract class Listener<T extends Event> {
       : JSON.parse(data.toString("utf8"));
   }
 }
-export default Listener;
+export { Listener };
