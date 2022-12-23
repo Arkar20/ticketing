@@ -1,6 +1,8 @@
-import { Publisher } from "./Publisher";
-import { Subjects } from "./subjects-type";
-import { TicketCreatedType } from "./TicketCreatedType";
+import {
+  TicketCreatedType,
+  Subjects,
+  Publisher,
+} from "@jeffery_microservice/common";
 
 class TicketCreatePublisher extends Publisher<TicketCreatedType> {
   type = Subjects.TicketCreated;

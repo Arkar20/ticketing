@@ -1,7 +1,10 @@
 import { Message } from "node-nats-streaming";
-import Listener from "./Listener";
-import { Subjects } from "./subjects-type";
-import { TicketCreatedType } from "./TicketCreatedType";
+
+import {
+  TicketCreatedType,
+  Listener,
+  Subjects,
+} from "@jeffery_microservice/common";
 
 class TicketCreateListener extends Listener<TicketCreatedType> {
   type = Subjects.TicketCreated;
