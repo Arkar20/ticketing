@@ -25,8 +25,8 @@ abstract class Listener<T extends Event> {
   }
   subscribe() {
     const subscribe = this.stan.subscribe(
-      "ticket:created",
-      "ticket-created-service-group",
+      this.type,
+      this.queueGroupName,
       this.subscriptionOptions()
     );
     subscribe.on("message", (msg: Message) => {
