@@ -4,9 +4,9 @@ import { Ticket } from "../model";
 import { body } from "express-validator";
 import { TicketCreatedPublisher } from "../events/publisher/TicketCreatePublisher";
 import { natsWrapper as NatsWrapper } from "../nats-connect";
-const ticketRouter = express.Router();
+const ticketCreateRouter = express.Router();
 
-ticketRouter.post(
+ticketCreateRouter.post(
   "/tickets",
   auth,
   [
@@ -32,4 +32,4 @@ ticketRouter.post(
   }
 );
 
-export default ticketRouter;
+export { ticketCreateRouter };
