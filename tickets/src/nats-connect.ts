@@ -12,10 +12,10 @@ class NatsWrapper {
 
   connect() {
     this._stan = nats.connect(
-      process.env.NODE_ENV === "dev" ? "ticketing-dev" : "ticketing",
-      "ramdomstring",
+      process.env.NATS_CLUSTER_ID!,
+      process.env.NATS_CLIENT_ID!,
       {
-        url: "http://nats-srv:4222",
+        url: process.env.NATS_URL!,
       }
     );
     return new Promise<void>((resolve, reject) => {

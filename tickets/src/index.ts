@@ -10,6 +10,15 @@ async function start() {
   if (!process.env.MONGO_URL) {
     throw new Error("Error Connecting to Mongo");
   }
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error("NATS_CLUSTER_ID not defined");
+  }
+  if (!process.env.NATS_URL) {
+    throw new Error("NATS_URL not defined");
+  }
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error("NATS_CLIENT_ID not defined");
+  }
   try {
     await NatsWrapper.connect();
 
