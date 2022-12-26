@@ -7,6 +7,7 @@ import {
   ticketCreateRouter,
   ticketGetAllRouter,
   ticketUpdateRoute,
+  ticketSingleRouter,
 } from "./routes/";
 
 import cookieSession from "cookie-session";
@@ -23,6 +24,7 @@ app.use(
 app.use(json());
 app.use("/api", ticketCreateRouter);
 app.use("/api/tickets", ticketGetAllRouter);
+app.use("/api/tickets", ticketSingleRouter);
 app.use("/api/", ticketUpdateRoute);
 
 app.use(errorHandler);
