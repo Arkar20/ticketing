@@ -12,15 +12,16 @@ ticketCreateRouter.post(
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("desc").not().isEmpty().withMessage("Desc is required"),
+    body("price").isNumeric().withMessage("Price is required"),
   ],
   validationHandler,
 
   async (req: Request, res: Response) => {
-    const { title, desc } = req.body;
+    const { title, desc, price } = req.body;
 
     const user_id = req.currentUser!.id;
 
-    const ticket = await Ticket.build({ title, desc, user_id }).save();
+    const ticket = await Ticket.build({ title, desc, user_id, price }).save();
 
     await new TicketCreatedPublisher(NatsWrapper.stan).publish({
       id: ticket.id,

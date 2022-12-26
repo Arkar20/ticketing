@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 interface ticketAttrs {
   title: string;
   desc: string;
+  price: string;
   user_id?: string;
 }
 
@@ -11,6 +12,7 @@ interface ticketAttrs {
 interface ticketDoc extends mongoose.Document {
   title: string;
   desc: string;
+  price: string;
   user_id: string;
 }
 
@@ -22,6 +24,10 @@ interface ticketModel extends mongoose.Model<ticketDoc> {
 const ticketSchema = new mongoose.Schema(
   {
     title: {
+      type: String,
+      require: true,
+    },
+    price: {
       type: String,
       require: true,
     },

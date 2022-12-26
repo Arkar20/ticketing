@@ -22,7 +22,7 @@ it("can create ticket", async () => {
     .agent(app)
     .post("/api/tickets")
     .set("Cookie", global.signin())
-    .send({ title: "test", desc: "test desc" });
+    .send({ title: "test", desc: "test desc", price: "100" });
 
   const ticketsAfterCreate = await Ticket.find({});
   expect(ticketsAfterCreate.length).toEqual(1);
@@ -71,7 +71,7 @@ it("publish an event after create a ticket", async () => {
     .agent(app)
     .post("/api/tickets")
     .set("Cookie", global.signin())
-    .send({ title: "test", desc: "test desc" });
+    .send({ title: "test", desc: "test desc", price: 100 });
 
   const ticketsAfterCreate = await Ticket.find({});
   expect(ticketsAfterCreate.length).toEqual(1);
