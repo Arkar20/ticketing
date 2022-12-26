@@ -15,9 +15,9 @@ ticketUpdateRoute.put(
   "/tickets/:id",
   auth,
   [
-    body("title").not().isEmpty().withMessage("Title is required"),
-    body("desc").isEmpty().withMessage("Desc is required"),
-    body("price").not().isEmpty().isFloat().withMessage("Price is required"),
+    body("title").exists({checkFalsy:false}).withMessage("Title is required"),
+    body("desc").exists({checkFalsy:false}).withMessage("Desc is required"),
+    body("price").exists({checkFalsy:false}).isFloat().withMessage("Price is required"),
   ],
   validationHandler,
 
@@ -40,6 +40,7 @@ ticketUpdateRoute.put(
     ticket.set({
       title: req.body.title,
       price: req.body.price,
+      desc:req.body.desc
     });
     await ticket.save();
 
