@@ -27,6 +27,7 @@ ticketCreateRouter.post(
       id: ticket.id,
       title: ticket.title,
       desc: ticket.desc,
+      price: ticket.price,
     });
 
     return res.status(201).send(ticket);

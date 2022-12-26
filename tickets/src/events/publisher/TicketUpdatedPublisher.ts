@@ -4,8 +4,8 @@ import {
   TicketUpdatedType,
 } from "@jeffery_microservice/common";
 
-class TicketCreatedPublisher extends Publisher<TicketUpdatedType> {
+class TicketUpdatedPublisher extends Publisher<TicketUpdatedType> {
   type = Subjects.TicketUpdated;
 }
 
-export { TicketCreatedPublisher };
+export { TicketUpdatedPublisher };

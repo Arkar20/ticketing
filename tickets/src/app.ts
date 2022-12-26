@@ -3,7 +3,11 @@ import { json } from "body-parser";
 
 import { errorHandler } from "@jeffery_microservice/common";
 import "express-async-errors";
-import { ticketCreateRouter, ticketGetAllRouter } from "./routes/";
+import {
+  ticketCreateRouter,
+  ticketGetAllRouter,
+  ticketUpdateRoute,
+} from "./routes/";
 
 import cookieSession from "cookie-session";
 const app = express();
@@ -19,6 +23,7 @@ app.use(
 app.use(json());
 app.use("/api", ticketCreateRouter);
 app.use("/api/tickets", ticketGetAllRouter);
+app.use("/api/", ticketUpdateRoute);
 
 app.use(errorHandler);
 
