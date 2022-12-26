@@ -37,7 +37,7 @@ metadata:
   name: order-srv
 spec:
   selector:
-    app: tickets
+    app: order
   ports:
   - port: 3000
     targetPort: 3000
