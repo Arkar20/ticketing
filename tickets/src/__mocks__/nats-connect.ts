@@ -1,7 +1,11 @@
 export const natsWrapper = {
   stan: {
-    publish: (subject: string, data: string, callback: () => void) => {
-      callback();
-    },
+    publish: jest
+      .fn()
+      .mockImplementation(
+        (subject: string, data: string, callback: () => void) => {
+          callback();
+        }
+      ),
   },
 };

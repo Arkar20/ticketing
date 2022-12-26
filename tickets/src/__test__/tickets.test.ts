@@ -1,8 +1,7 @@
 import request from "supertest";
 import app from "../app";
 import { Ticket } from "../model";
-
-jest.mock("../nats-connect");
+import { natsWrapper } from "../nats-connect";
 
 it("has a route that returns all tickets", async () => {
   const response = await request(app).post("/api/tickets");
@@ -65,4 +64,17 @@ it("returns an error if an invalid price is provided", async () => {
       title: "laskdfj",
     })
     .expect(400);
+});
+
+it("publish an event after create a ticket", async () => {
+  const response = await request
+    .agent(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "test", desc: "test desc" });
+
+  const ticketsAfterCreate = await Ticket.find({});
+  expect(ticketsAfterCreate.length).toEqual(1);
+
+  expect(natsWrapper.stan.publish).toHaveBeenCalled();
 });
