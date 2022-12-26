@@ -2,6 +2,8 @@ import request from "supertest";
 import app from "../app";
 import { Ticket } from "../model";
 
+jest.mock("../nats-connect");
+
 it("has a route that returns all tickets", async () => {
   const response = await request(app).post("/api/tickets");
 

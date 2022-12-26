@@ -1,7 +1,8 @@
 import { BadRequest } from "@jeffery_microservice/common";
 import mongoose from "mongoose";
 import app from "./app";
-import NatsWrapper from "./nats-connect";
+
+import { natsWrapper as NatsWrapper } from "./nats-connect";
 async function start() {
   if (!process.env.JWT_SECRET) {
     console.log("JWT Secret Key Not Exists");
@@ -11,6 +12,7 @@ async function start() {
   }
   try {
     await NatsWrapper.connect();
+
     mongoose.set("strictQuery", true);
     await mongoose.connect(process.env.MONGO_URL);
     console.log("mongo Connected");

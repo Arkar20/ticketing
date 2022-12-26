@@ -15,11 +15,11 @@ abstract class Publisher<T extends Event> {
   }
 
   publish(data: T["data"]): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise<T["data"]>((resolve, reject) => {
       this.stan.publish(this.type, JSON.stringify(data), (err) => {
         if (err) reject(err);
         console.log("event has publish");
-        resolve();
+        resolve(data);
       });
     });
   }

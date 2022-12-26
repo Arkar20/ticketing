@@ -11,9 +11,13 @@ class NatsWrapper {
   }
 
   connect() {
-    this._stan = nats.connect("ticketing", "ramdomstring", {
-      url: "http://nats-srv:4222",
-    });
+    this._stan = nats.connect(
+      process.env.NODE_ENV === "dev" ? "ticketing-dev" : "ticketing",
+      "ramdomstring",
+      {
+        url: "http://nats-srv:4222",
+      }
+    );
     return new Promise<void>((resolve, reject) => {
       this.stan.on("connect", () => {
         console.log("Connected to NATS");
@@ -26,4 +30,4 @@ class NatsWrapper {
   }
 }
 
-export default new NatsWrapper();
+export const natsWrapper = new NatsWrapper();

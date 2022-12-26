@@ -3,7 +3,7 @@ import { auth, validationHandler } from "@jeffery_microservice/common";
 import { Ticket } from "../model";
 import { body } from "express-validator";
 import { TicketCreatedPublisher } from "../events/publisher/TicketCreatePublisher";
-import NatsWrapper from "../nats-connect";
+import { natsWrapper as NatsWrapper } from "../nats-connect";
 const ticketRouter = express.Router();
 
 ticketRouter.post(
