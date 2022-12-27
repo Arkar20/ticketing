@@ -16,7 +16,7 @@ spec:
         image: arkar20/ticketing-order
         env:
           - name: NATS_CLUSTER_ID
-            value: "order"
+            value: "ticketing"
           - name: NATS_URL
             value: "http://nats-srv:4222"
           - name: NATS_CLIENT_ID
