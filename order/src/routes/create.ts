@@ -19,7 +19,8 @@ orderCreateRoute.post(
     body("ticket_id")
       .not()
       .isEmpty()
-      .custom((input: string) => mongoose.Types.ObjectId.isValid(input)),
+      .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+      .withMessage("Mal Form ID value"),
   ],
   validationHandler,
 
@@ -41,12 +42,12 @@ orderCreateRoute.post(
     expireTime.setSeconds(expireTime.getSeconds() + EXPIRE_DURATION);
 
     //create the order
-    const order = await Order.build({
+    const order = Order.build({
       user_id: req.currentUser!.id,
       status: OrderStatus.Created,
       expire_at: expireTime,
       ticket,
-    }).save();
+    });
 
     return res.status(201).send(order);
   }

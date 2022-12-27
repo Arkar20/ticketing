@@ -18,7 +18,7 @@ interface TicketDoc extends mongoose.Document {
 
 //for entire collection types
 interface TicketModel extends mongoose.Model<TicketDoc> {
-  build: (attrs: TicketAttrs) => TicketAttrs;
+  build: (attrs: TicketAttrs) => TicketDoc;
 }
 
 const ticketSchema = new mongoose.Schema(
