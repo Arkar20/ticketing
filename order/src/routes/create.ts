@@ -11,6 +11,7 @@ import mongoose from "mongoose";
 
 const orderCreateRoute = express.Router();
 
+const EXPIRE_DURATION = 15 * 60;
 orderCreateRoute.post(
   "/orders",
   auth,
@@ -36,10 +37,18 @@ orderCreateRoute.post(
     if (ticketIsAlreadyOrder) {
       throw new BadRequest("Ticket is already reserved");
     }
+    const expireTime = new Date();
+    expireTime.setSeconds(expireTime.getSeconds() + EXPIRE_DURATION);
 
     //create the order
+    const order = await Order.build({
+      user_id: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expire_at: expireTime,
+      ticket,
+    }).save();
 
-    return res.status(201).send("post order route");
+    return res.status(201).send(order);
   }
 );
 

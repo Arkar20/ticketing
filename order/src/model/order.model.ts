@@ -5,14 +5,14 @@ import { TicketDoc } from "./index";
 interface OrderAttrs {
   user_id: string;
   status: OrderStatus;
-  expire_at: string;
+  expire_at: Date;
   ticket: TicketDoc;
 }
 //for single doc types
 interface OrderDoc extends mongoose.Document {
   user_id: string;
   status: OrderStatus;
-  expire_at: string;
+  expire_at: Date;
   ticket: TicketDoc;
 }
 //for entire model types
