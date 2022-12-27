@@ -31,16 +31,7 @@ orderCreateRoute.post(
       throw new BadRequest("No Ticket is Found");
     }
 
-    const ticketIsAlreadyOrder = await Order.findOne({
-      ticket: ticket,
-      status: {
-        $in: [
-          OrderStatus.Created,
-          OrderStatus.AwaitingPayment,
-          OrderStatus.Complete,
-        ],
-      },
-    });
+    const ticketIsAlreadyOrder = await ticket.isReserved();
 
     if (ticketIsAlreadyOrder) {
       throw new BadRequest("Ticket is already reserved");
