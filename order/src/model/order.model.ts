@@ -1,15 +1,15 @@
-import mongoose, { mongo } from "mongoose";
-
+import mongoose from "mongoose";
+import { OrderStatus } from "@jeffery_microservice/common";
 // for parameters types
 interface OrderAttrs {
   user_id: string;
-  status: string;
+  status: OrderStatus;
   expire_at: string;
 }
 //for single doc types
 interface OrderDoc extends mongoose.Document {
   user_id: string;
-  status: string;
+  status: OrderStatus;
   expire_at: string;
 }
 //for entire model types
