@@ -1,16 +1,19 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@jeffery_microservice/common";
+import { TicketDoc } from "./index";
 // for parameters types
 interface OrderAttrs {
   user_id: string;
   status: OrderStatus;
   expire_at: string;
+  ticket: TicketDoc;
 }
 //for single doc types
 interface OrderDoc extends mongoose.Document {
   user_id: string;
   status: OrderStatus;
   expire_at: string;
+  ticket: TicketDoc;
 }
 //for entire model types
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -31,6 +34,10 @@ const orderSchema = new mongoose.Schema(
     },
     expire_at: {
       type: mongoose.Schema.Types.Date,
+    },
+    ticket: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Ticket",
     },
   },
   {
