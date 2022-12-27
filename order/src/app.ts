@@ -4,10 +4,10 @@ import { json } from "body-parser";
 import { errorHandler } from "@jeffery_microservice/common";
 import "express-async-errors";
 import {
-  ticketCreateRouter,
-  ticketGetAllRouter,
-  ticketUpdateRoute,
-  ticketSingleRouter,
+  orderCreateRoute,
+  orderGetAllRouter,
+  orderUpdateRoute,
+  orderDeleteRoute,
 } from "./routes/";
 
 import cookieSession from "cookie-session";
@@ -22,10 +22,10 @@ app.use(
 );
 
 app.use(json());
-app.use("/api", ticketCreateRouter);
-app.use("/api/tickets", ticketGetAllRouter);
-app.use("/api/tickets", ticketSingleRouter);
-app.use("/api/", ticketUpdateRoute);
+app.use("/api", orderCreateRoute);
+app.use("/api/", orderGetAllRouter);
+app.use("/api/", orderUpdateRoute);
+app.use("/api/", orderDeleteRoute);
 
 app.use(errorHandler);
 

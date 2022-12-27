@@ -1,12 +1,9 @@
 import express from "express";
-import { Ticket } from "../model";
 
-const ticketGetAllRouter = express.Router();
+const orderGetAllRouter = express.Router();
 
-ticketGetAllRouter.get("/", async (req, res) => {
-  const tickets = await Ticket.find({});
-
-  return res.json(tickets);
+orderGetAllRouter.get("/orders", async (req, res) => {
+  return res.send("get all route");
 });
 
-export { ticketGetAllRouter };
+export { orderGetAllRouter };

@@ -9,9 +9,9 @@ import { body } from "express-validator";
 import { TicketUpdatedPublisher } from "../events/publisher/TicketUpdatedPublisher";
 import { natsWrapper as NatsWrapper } from "../nats-connect";
 import { BadRequest } from "@jeffery_microservice/common";
-const orderUpdateRoute = express.Router();
+const orderDeleteRoute = express.Router();
 
-orderUpdateRoute.put(
+orderDeleteRoute.delete(
   "/orders/:id",
   auth,
   validationHandler,
@@ -21,4 +21,4 @@ orderUpdateRoute.put(
   }
 );
 
-export { orderUpdateRoute };
+export { orderDeleteRoute };
