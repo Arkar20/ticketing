@@ -4,3 +4,5 @@ export * from "./Publisher";
 export * from "./TicketCreatedType";
 export * from "./TicketUpdatedType";
 export * from "./types/order-status";
+export * from "./OrderCancelType";
+export * from "./OrderCreatedType";
