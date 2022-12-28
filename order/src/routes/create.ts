@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+import mongoose from "mongoose";
+import { natsWrapper } from "../nats-connect";
 import {
   auth,
   BadRequest,
@@ -7,7 +9,8 @@ import {
 } from "@jeffery_microservice/common";
 import { Order, Ticket } from "../model";
 import { body } from "express-validator";
-import mongoose from "mongoose";
+
+import { OrderCreatedEvent } from "../events/publisher/OrderCreateEvent";
 
 const orderCreateRoute = express.Router();
 
@@ -48,6 +51,19 @@ orderCreateRoute.post(
       expire_at: expireTime,
       ticket,
     }).save();
+
+    new OrderCreatedEvent(natsWrapper.stan).publish({
+      id: order.id,
+      status: order.status,
+      expire_at: order.expire_at.toISOString(),
+      user_id: order.user_id,
+      ticket: {
+        id: ticket.id,
+        price: String(ticket.price),
+        desc: ticket.desc,
+        title: ticket.title,
+      },
+    });
 
     return res.status(201).send(order);
   }

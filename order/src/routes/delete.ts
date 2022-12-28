@@ -8,9 +8,10 @@ import {
 import { Order, Ticket } from "../model";
 import { param } from "express-validator";
 import { TicketUpdatedPublisher } from "../events/publisher/TicketUpdatedPublisher";
-import { natsWrapper as NatsWrapper } from "../nats-connect";
+import { natsWrapper, natsWrapper as NatsWrapper } from "../nats-connect";
 import { BadRequest } from "@jeffery_microservice/common";
 import mongoose from "mongoose";
+import { OrderCancelledEvent } from "../events/publisher/OrderCancelEvent";
 const orderDeleteRoute = express.Router();
 
 orderDeleteRoute.delete(
@@ -26,7 +27,7 @@ orderDeleteRoute.delete(
   validationHandler,
 
   async (req: Request, res: Response) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate("ticket");
     if (!order) {
       throw new BadRequest("Order not found");
     }
@@ -37,6 +38,16 @@ orderDeleteRoute.delete(
 
     order.status = OrderStatus.Cancelled;
     await order.save();
+
+    new OrderCancelledEvent(natsWrapper.stan).publish({
+      id: order.id,
+      ticket: {
+        id: order.ticket.id,
+        price: String(order.ticket.price),
+        desc: order.ticket.desc,
+        title: order.ticket.title,
+      },
+    });
 
     return res.status(201).send(order);
   }

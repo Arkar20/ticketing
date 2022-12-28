@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import request from "supertest";
 import app from "../app";
 import { Ticket } from "../model";
+import { natsWrapper } from "../nats-connect";
 
 it("has route for create order", async () => {
   const res = await request(app).post("/api/orders").send();
@@ -44,4 +45,17 @@ it("can create ticket", async () => {
   expect(res.body.ticket.id).toEqual(ticket.id);
 });
 
-it.todo("emit the order created event");
+it("emit the order created event", async () => {
+  const ticket = await Ticket.build({
+    desc: "test desc",
+    title: "hello title",
+    price: 100,
+  }).save();
+
+  const res = await request(app)
+    .post("/api/orders")
+    .set("Cookie", global.signin())
+    .send({ ticket_id: ticket.id });
+
+  expect(natsWrapper.stan.publish).toHaveBeenCalled();
+});
