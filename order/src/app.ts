@@ -22,8 +22,8 @@ app.use(
 );
 
 app.use(json());
-app.use("/api", orderCreateRoute);
 app.use("/api/", orderGetAllRouter);
+app.use("/api", orderCreateRoute);
 app.use("/api/", orderUpdateRoute);
 app.use("/api/", orderDeleteRoute);
 

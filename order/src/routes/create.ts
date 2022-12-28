@@ -42,12 +42,12 @@ orderCreateRoute.post(
     expireTime.setSeconds(expireTime.getSeconds() + EXPIRE_DURATION);
 
     //create the order
-    const order = Order.build({
+    const order = await Order.build({
       user_id: req.currentUser!.id,
       status: OrderStatus.Created,
       expire_at: expireTime,
       ticket,
-    });
+    }).save();
 
     return res.status(201).send(order);
   }

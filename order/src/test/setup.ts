@@ -9,7 +9,7 @@ jest.mock("../nats-connect");
 let mongo: any;
 
 declare global {
-  var signin: () => string[];
+  var signin: (id?: String) => string[];
 }
 beforeAll(async () => {
   process.env.JWT_SECRET = "test";
@@ -31,9 +31,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = () => {
+global.signin = (id?: String) => {
   const payload = {
-    id: "123123123",
+    id: id ?? "123123123",
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET!);
