@@ -1,6 +1,6 @@
 import { Subjects } from "./index";
 interface OrderCreateType {
-  subject: Subjects.OrderCreated;
+  subject: Subjects;
   data: {
     id: String;
     user_id: String;

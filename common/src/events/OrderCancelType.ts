@@ -1,6 +1,6 @@
 import { Subjects } from "./index";
 interface OrderCancelType {
-  subject: Subjects.OrderCancelled;
+  subject: Subjects;
   data: {
     id: String;
     ticket: {
