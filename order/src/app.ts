@@ -8,6 +8,7 @@ import {
   orderGetAllRouter,
   orderUpdateRoute,
   orderDeleteRoute,
+  orderSingleRouter,
 } from "./routes/";
 
 import cookieSession from "cookie-session";
@@ -24,6 +25,7 @@ app.use(
 app.use(json());
 app.use("/api/", orderGetAllRouter);
 app.use("/api", orderCreateRoute);
+app.use("/api/", orderSingleRouter);
 app.use("/api/", orderUpdateRoute);
 app.use("/api/", orderDeleteRoute);
 
