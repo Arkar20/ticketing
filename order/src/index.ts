@@ -1,7 +1,10 @@
 import { BadRequest } from "@jeffery_microservice/common";
 import mongoose from "mongoose";
 import app from "./app";
-import { TicketCreatedListener } from "./events/listeners/TicketCreatedListener";
+import {
+  TicketCreatedListener,
+  TicketUpdatedListener,
+} from "./events/listeners";
 
 import { natsWrapper, natsWrapper as NatsWrapper } from "./nats-connect";
 async function start() {
@@ -33,6 +36,7 @@ async function start() {
     });
 
     new TicketCreatedListener(natsWrapper.stan).subscribe();
+    new TicketUpdatedListener(natsWrapper.stan).subscribe();
 
     //kill nats if error
     process.on("SIGINT", () => NatsWrapper.stan.close());

@@ -10,7 +10,7 @@ class TicketCreatedListener extends Listener<TicketCreatedType> {
   type = Subjects.TicketCreated;
   queueGroupName = "order-service";
 
-  async onMessage(data: TicketCreatedType["data"], meg: Message) {
+  async onMessage(data: TicketCreatedType["data"], msg: Message) {
     const ticket = Ticket.build({
       id: data.id,
       title: data.title,
@@ -23,6 +23,8 @@ class TicketCreatedListener extends Listener<TicketCreatedType> {
       "🚀 ~ file: TicketCreatedListener.ts:20 ~ TicketCreatedListener ~ onMessage ~ ticket",
       ticket
     );
+
+    msg.ack();
   }
 }
 export { TicketCreatedListener };
