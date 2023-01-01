@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 // attrs that's gonna give as parameters
 interface ticketAttrs {
@@ -14,6 +15,7 @@ interface ticketDoc extends mongoose.Document {
   desc: string;
   price: string;
   user_id: string;
+  version: number;
 }
 
 //for entire doc in mongo
@@ -51,9 +53,13 @@ const ticketSchema = new mongoose.Schema(
   }
 );
 
+ticketSchema.set("versionKey", "version");
+
 ticketSchema.statics.build = (attrs: ticketAttrs) => {
   return new Ticket(attrs);
 };
+ticketSchema.plugin(updateIfCurrentPlugin);
+
 const Ticket = mongoose.model<ticketDoc, ticketModel>("ticket", ticketSchema);
 
 export { Ticket };
