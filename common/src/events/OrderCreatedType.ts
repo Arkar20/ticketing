@@ -3,6 +3,7 @@ interface OrderCreateType {
   subject: Subjects;
   data: {
     id: String;
+    version: Number;
     user_id: String;
     status: String;
     expire_at: String;

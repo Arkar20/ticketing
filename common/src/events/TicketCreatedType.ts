@@ -6,6 +6,7 @@ interface TicketCreatedType {
     title: String;
     desc: String;
     price: String;
+    version: Number;
   };
 }
 

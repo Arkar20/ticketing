@@ -6,6 +6,7 @@ interface TicketUpdatedType {
     title: String;
     desc: String;
     price: String;
+    version: Number;
   };
 }
 
