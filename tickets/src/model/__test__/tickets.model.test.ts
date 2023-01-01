@@ -18,3 +18,16 @@ it("implements concurrency issue with version the tickets", async () => {
     return;
   }
 });
+
+it("increment the version number on updates", async () => {
+  const ticket = Ticket.build({
+    title: "ticket version",
+    desc: "desc version",
+    price: "40",
+  });
+  await ticket.save();
+  await ticket.save();
+  await ticket.save();
+
+  expect(ticket.version).toBe(2);
+});
