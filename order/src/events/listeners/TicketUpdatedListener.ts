@@ -12,9 +12,9 @@ class TicketUpdatedListener extends Listener<TicketUpdatedType> {
   queueGroupName = "order-service";
 
   async onMessage(data: TicketUpdatedType["data"], msg: Message) {
-    const ticket = await Ticket.findOne({
-      _id: data.id,
-      version: Number(data.version) - 1,
+    const ticket = await Ticket.findByEvent({
+      id: String(data.id),
+      version: Number(data.version),
     });
 
     if (!ticket) {

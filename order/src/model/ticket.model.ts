@@ -23,6 +23,10 @@ interface TicketDoc extends mongoose.Document {
 //for entire collection types
 interface TicketModel extends mongoose.Model<TicketDoc> {
   build: (attrs: TicketAttrs) => TicketDoc;
+  findByEvent: (event: {
+    id: string;
+    version: number;
+  }) => Promise<TicketDoc | null>;
 }
 
 const ticketSchema = new mongoose.Schema(
@@ -77,6 +81,12 @@ ticketSchema.methods.isReserved = async function () {
   return !!ticketIsAlreadyOrder;
 };
 
+ticketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Ticket.findOne({
+    _id: event.id,
+    version: Number(event.version) - 1,
+  });
+};
 ticketSchema.plugin(updateIfCurrentPlugin);
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", ticketSchema);
