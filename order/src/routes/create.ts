@@ -56,6 +56,7 @@ orderCreateRoute.post(
       id: order.id,
       status: order.status,
       expire_at: order.expire_at.toISOString(),
+      version: order.version,
       user_id: order.user_id,
       ticket: {
         id: ticket.id,

@@ -41,6 +41,7 @@ orderDeleteRoute.delete(
 
     new OrderCancelledEvent(natsWrapper.stan).publish({
       id: order.id,
+      version: order.version,
       ticket: {
         id: order.ticket.id,
         price: String(order.ticket.price),
