@@ -12,12 +12,15 @@ class TicketUpdatedListener extends Listener<TicketUpdatedType> {
   queueGroupName = "order-service";
 
   async onMessage(data: TicketUpdatedType["data"], msg: Message) {
-    const ticket = await Ticket.findById(data.id);
-    const { title, desc, price } = data;
+    const ticket = await Ticket.findOne({
+      _id: data.id,
+      version: Number(data.version) - 1,
+    });
 
     if (!ticket) {
       throw new BadRequest("Ticket Not Found");
     }
+    const { title, desc, price } = data;
 
     await ticket.set({ title, desc, price }).save();
 
