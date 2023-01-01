@@ -36,6 +36,7 @@ it("need to login to delete the single order", async () => {
 
 it("auth user needs to own the order to delete", async () => {
   const ticket = await Ticket.build({
+    id: "123",
     desc: "test desc",
     title: "hello title",
     price: 100,
@@ -59,6 +60,7 @@ it("auth user needs to own the order to delete", async () => {
 
 it("emit the order cancelled event", async () => {
   const ticket = await Ticket.build({
+    id: "123",
     desc: "test desc",
     title: "hello title",
     price: 100,

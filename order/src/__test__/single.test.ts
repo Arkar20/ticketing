@@ -33,6 +33,7 @@ it("need to login to retrieve the single order", async () => {
 
 it("auth user needs to own the order", async () => {
   const ticket = await Ticket.build({
+    id: "123",
     desc: "test desc",
     title: "hello title",
     price: 100,

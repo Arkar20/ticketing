@@ -6,6 +6,7 @@ import { OrderStatus } from "@jeffery_microservice/common";
 
 const buildTicket = async () => {
   const res = await Ticket.build({
+    id: "123",
     desc: "test desc",
     title: "hello title",
     price: 100,

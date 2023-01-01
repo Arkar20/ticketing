@@ -31,6 +31,7 @@ it("show not found error when ticket is not found in db", async () => {
 
 it("can create ticket", async () => {
   const ticket = await Ticket.build({
+    id: "123",
     desc: "test desc",
     title: "hello title",
     price: 100,
@@ -47,6 +48,7 @@ it("can create ticket", async () => {
 
 it("emit the order created event", async () => {
   const ticket = await Ticket.build({
+    id: "123",
     desc: "test desc",
     title: "hello title",
     price: 100,
