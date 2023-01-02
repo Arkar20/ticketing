@@ -2,16 +2,16 @@ import { Subjects } from "./index";
 interface OrderCreateType {
   subject: Subjects;
   data: {
-    id: String;
-    version: Number;
-    user_id: String;
-    status: String;
-    expire_at: String;
+    id: string;
+    version: number;
+    user_id: string;
+    status: string;
+    expire_at: string;
     ticket: {
-      id: String;
-      title: String;
-      desc: String;
-      price: String;
+      id: string;
+      title: string;
+      desc: string;
+      price: number;
     };
   };
 }

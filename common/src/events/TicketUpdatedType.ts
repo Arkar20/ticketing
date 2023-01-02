@@ -2,7 +2,7 @@ import { Subjects } from "./index";
 interface TicketUpdatedType {
   subject: Subjects;
   data: {
-    id: number;
+    id: string;
     title: string;
     desc: string;
     price: string;

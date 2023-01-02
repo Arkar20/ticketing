@@ -20,7 +20,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@jeffery_microservice/common": "^1.0.51",
+    "@jeffery_microservice/common": "^1.0.52",
     "node-nats-streaming": "^0.3.2"
   }
 }

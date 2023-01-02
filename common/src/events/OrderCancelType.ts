@@ -2,13 +2,13 @@ import { Subjects } from "./index";
 interface OrderCancelType {
   subject: Subjects;
   data: {
-    id: String;
-    version: Number;
+    id: string;
+    version: number;
     ticket: {
-      id: String;
-      title: String;
-      desc: String;
-      price: String;
+      id: string;
+      title: string;
+      desc: string;
+      price: number;
     };
   };
 }
