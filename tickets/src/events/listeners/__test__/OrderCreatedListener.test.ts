@@ -11,7 +11,7 @@ const setUp = async () => {
   const ticket = await Ticket.build({
     title: "title",
     desc: "desc",
-    price: "1",
+    price: 1,
     user_id: "123123",
   }).save();
 
@@ -64,9 +64,6 @@ it("emit a ticket update event after creating a order", async () => {
   const jestData = JSON.parse(
     (natsWrapper.stan.publish as jest.Mock).mock.calls.slice(-1)[0][1]
   );
-  console.log(
-    "🚀 ~ file: OrderCreatedListener.test.ts:65 ~ it ~ jestData",
-    jestData
-  );
+
   expect(jestData.order_id).toBe(data.id);
 });
