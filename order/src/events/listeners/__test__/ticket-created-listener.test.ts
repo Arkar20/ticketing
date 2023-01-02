@@ -10,9 +10,9 @@ const setUp = async () => {
 
   const data: TicketCreatedType["data"] = {
     desc: "test",
-    id: String(new mongoose.Types.ObjectId()),
+    id: new mongoose.Types.ObjectId().toString(),
     title: "test title",
-    price: "100",
+    price: 100,
     version: 0,
   };
 

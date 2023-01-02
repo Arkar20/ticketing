@@ -44,7 +44,7 @@ orderDeleteRoute.delete(
       version: order.version,
       ticket: {
         id: order.ticket.id,
-        price: String(order.ticket.price),
+        price: order.ticket.price,
         desc: order.ticket.desc,
         title: order.ticket.title,
       },

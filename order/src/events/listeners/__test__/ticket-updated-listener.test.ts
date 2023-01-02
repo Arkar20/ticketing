@@ -9,7 +9,7 @@ const setUp = async () => {
   const listener = new TicketUpdatedListener(natsWrapper.stan);
 
   const ticket = await Ticket.build({
-    id: String(new mongoose.Types.ObjectId()),
+    id: new mongoose.Types.ObjectId().toString(),
     title: "test",
     desc: "test",
     price: 10,
@@ -19,7 +19,7 @@ const setUp = async () => {
     desc: "test update",
     id: ticket.id,
     title: "test title update",
-    price: "100",
+    price: 100,
     version: 1,
   };
 

@@ -5,18 +5,18 @@ import { OrderStatus } from "@jeffery_microservice/common";
 
 //for paramaters attrs types
 interface TicketAttrs {
-  id: String;
-  title: String;
-  desc: String;
-  price: Number;
+  id: string;
+  title: string;
+  desc: string;
+  price: number;
 }
 
 //for single doc types
 interface TicketDoc extends mongoose.Document {
-  title: String;
-  desc: String;
-  price: Number;
-  version: Number;
+  title: string;
+  desc: string;
+  price: number;
+  version: number;
   isReserved: () => Promise<boolean>;
 }
 

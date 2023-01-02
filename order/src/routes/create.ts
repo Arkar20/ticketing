@@ -60,7 +60,7 @@ orderCreateRoute.post(
       user_id: order.user_id,
       ticket: {
         id: ticket.id,
-        price: String(ticket.price),
+        price: ticket.price,
         desc: ticket.desc,
         title: ticket.title,
       },

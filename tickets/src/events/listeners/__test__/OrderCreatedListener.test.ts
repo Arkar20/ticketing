@@ -43,7 +43,7 @@ it("set the order id of the ticket when event trigger", async () => {
 
   const ticketUpdate = await Ticket.findById(ticket.id);
 
-  expect(ticketUpdate!.order_id).toBe(data.status);
+  expect(ticketUpdate!.order_id).toBe(data.id);
 });
 
 it("calls the ack fun", async () => {
@@ -52,4 +52,23 @@ it("calls the ack fun", async () => {
   await listener.onMessage(data, msg);
 
   expect(msg.ack).toHaveBeenCalled();
+});
+
+it("emit a ticket update event after creating a order", async () => {
+  const { listener, data, msg, ticket } = await setUp();
+  console.log("🚀 ~ file: OrderCreatedListener.test.ts:59 ~ it ~ data", data);
+
+  await listener.onMessage(data, msg);
+
+  expect(natsWrapper.stan.publish).toHaveBeenCalled();
+
+  const jestData = JSON.parse(
+    (natsWrapper.stan.publish as jest.Mock).mock.calls[0][1]
+  );
+  console.log(
+    "🚀 ~ file: OrderCreatedListener.test.ts:68 ~ it ~ jestData",
+    jestData
+  );
+
+  // expect(jestData.order_id).toBe(data.id);
 });

@@ -5,7 +5,7 @@ interface TicketUpdatedType {
     id: string;
     title: string;
     desc: string;
-    price: string;
+    price: number;
     version: number;
     order_id?: string;
   };
