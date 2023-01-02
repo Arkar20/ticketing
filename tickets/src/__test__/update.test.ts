@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import request from "supertest";
 import app from "../app";
 import { Ticket } from "../model";
@@ -21,6 +22,7 @@ it("can update ticket title", async () => {
     title: "test title",
     desc: "test desc",
     price: 100,
+    order_id: new mongoose.Types.ObjectId().toString(),
   };
 
   const ticket = await Ticket.create(data);
@@ -41,6 +43,7 @@ it("can update ticket price", async () => {
     title: "test title",
     desc: "test desc",
     price: 100,
+    order_id: new mongoose.Types.ObjectId().toString(),
   };
 
   const ticket = await Ticket.create(data);
@@ -61,6 +64,7 @@ it("can update ticket desc", async () => {
     title: "test title",
     desc: "test desc",
     price: 100,
+    order_id: new mongoose.Types.ObjectId().toString(),
   };
 
   const ticket = await Ticket.create(data);
@@ -75,4 +79,24 @@ it("can update ticket desc", async () => {
     });
 
   expect(res.body.desc).toEqual("test desc update");
+});
+it("cannot update if ticket has order id", async () => {
+  const data = {
+    title: "test title",
+    desc: "test desc",
+    price: 100,
+  };
+
+  const ticket = await Ticket.create(data);
+
+  const res = await await request(app)
+    .put(`/api/tickets/${ticket.id}`)
+    .set("Cookie", global.signin())
+    .send({
+      title: "",
+      desc: "test desc update",
+      price: 0,
+    });
+
+  expect(res.status).toEqual(400);
 });

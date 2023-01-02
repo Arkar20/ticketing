@@ -35,6 +35,10 @@ ticketUpdateRoute.put(
       throw new BadRequest("Not Found");
     }
 
+    if (!ticket.order_id) {
+      throw new BadRequest("Ticket is locked! Cannot Edit!");
+    }
+
     if (
       process.env.NODE_ENV !== "test" &&
       ticket.user_id !== req.currentUser!.id
