@@ -4,7 +4,7 @@ it("implements concurrency issue with version the tickets", async () => {
   const ticket = await Ticket.build({
     title: "ticket version",
     desc: "desc version",
-    price: "40",
+    price: 40,
   }).save();
 
   const firstInstance = await Ticket.findById(ticket.id);
@@ -23,7 +23,7 @@ it("increment the version number on updates", async () => {
   const ticket = Ticket.build({
     title: "ticket version",
     desc: "desc version",
-    price: "40",
+    price: 40,
   });
   await ticket.save();
   await ticket.save();

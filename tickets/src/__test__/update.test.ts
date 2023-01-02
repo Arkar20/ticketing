@@ -54,7 +54,7 @@ it("can update ticket price", async () => {
       price: 200,
     });
 
-  expect(res.body.price).toEqual("200");
+  expect(res.body.price).toEqual(200);
 });
 it("can update ticket desc", async () => {
   const data = {
