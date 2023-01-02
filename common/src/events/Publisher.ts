@@ -8,7 +8,7 @@ interface Event {
 abstract class Publisher<T extends Event> {
   abstract type: T["subject"];
 
-  private stan;
+  protected stan;
 
   constructor(stan: Stan) {
     this.stan = stan;

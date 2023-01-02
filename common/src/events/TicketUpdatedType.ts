@@ -2,11 +2,12 @@ import { Subjects } from "./index";
 interface TicketUpdatedType {
   subject: Subjects;
   data: {
-    id: Number;
-    title: String;
-    desc: String;
-    price: String;
-    version: Number;
+    id: number;
+    title: string;
+    desc: string;
+    price: string;
+    version: number;
+    order_id?: string;
   };
 }
 
