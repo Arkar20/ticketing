@@ -29,14 +29,20 @@ class OrderCreatedListener extends Listener<OrderCreateType> {
 
     const updatedTicket = await ticket.set({ order_id: data.id }).save();
 
-    new TicketUpdatedPublisher(this.stan).publish({
+    const passData = {
       id: updatedTicket.id,
-      title: "my title",
+      title: updatedTicket.title,
       price: updatedTicket.price,
       desc: updatedTicket.desc,
       version: updatedTicket.version,
       order_id: updatedTicket.order_id,
-    });
+    };
+    console.log(
+      "🚀 ~ file: OrderCreatedListener.ts:45 ~ OrderCreatedListener ~ onMessage ~ passData",
+      passData
+    );
+
+    new TicketUpdatedPublisher(this.stan).publish(passData);
     msg.ack();
   }
 }

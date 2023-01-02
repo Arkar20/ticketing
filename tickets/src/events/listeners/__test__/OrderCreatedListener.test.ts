@@ -56,19 +56,17 @@ it("calls the ack fun", async () => {
 
 it("emit a ticket update event after creating a order", async () => {
   const { listener, data, msg, ticket } = await setUp();
-  console.log("🚀 ~ file: OrderCreatedListener.test.ts:59 ~ it ~ data", data);
 
   await listener.onMessage(data, msg);
 
   expect(natsWrapper.stan.publish).toHaveBeenCalled();
 
   const jestData = JSON.parse(
-    (natsWrapper.stan.publish as jest.Mock).mock.calls[0][1]
+    (natsWrapper.stan.publish as jest.Mock).mock.calls.slice(-1)[0][1]
   );
   console.log(
-    "🚀 ~ file: OrderCreatedListener.test.ts:68 ~ it ~ jestData",
+    "🚀 ~ file: OrderCreatedListener.test.ts:65 ~ it ~ jestData",
     jestData
   );
-
-  // expect(jestData.order_id).toBe(data.id);
+  expect(jestData.order_id).toBe(data.id);
 });
