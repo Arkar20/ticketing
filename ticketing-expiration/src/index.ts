@@ -1,4 +1,5 @@
 import express from "express";
+import { OrderCreatedListener } from "./events/listeners";
 
 const app = express();
 
@@ -26,6 +27,8 @@ async function start() {
       console.log("NATS connection closed!");
       process.exit();
     });
+
+    new OrderCreatedListener(natsWrapper.stan).subscribe();
 
     //kill nats if error
     process.on("SIGINT", () => NatsWrapper.stan.close());
