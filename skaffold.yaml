@@ -11,6 +11,15 @@ build:
     docker:
       dockerfile: Dockerfile
       
+  - image: arkar20/ticketing-expiration
+    context: ticketing-expiration
+    sync:
+      manual:
+      - src: src/**/*.ts
+        dest: .
+    docker:
+      dockerfile: Dockerfile
+      
   - image: arkar20/ticketing-tickets
     context: tickets
     sync:
