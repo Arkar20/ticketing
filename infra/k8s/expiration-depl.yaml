@@ -23,13 +23,8 @@ spec:
             valueFrom: 
               fieldRef:
                 fieldPath: metadata.name
-          - name: MONGO_URL
-            value: "mongodb://order-mongo-srv:27017/order"
-          - name: JWT_SECRET
-            valueFrom:
-              secretKeyRef:
-                  name: jwt-secret
-                  key:  JWT_SECRET
+          - name: REDIS_HOST
+            value: expiration-redis-srv
 ---
 apiVersion: v1
 kind: Service

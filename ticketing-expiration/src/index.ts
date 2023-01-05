@@ -5,12 +5,6 @@ const app = express();
 
 import { natsWrapper, natsWrapper as NatsWrapper } from "./nats-connect";
 async function start() {
-  if (!process.env.JWT_SECRET) {
-    console.log("JWT Secret Key Not Exists");
-  }
-  if (!process.env.MONGO_URL) {
-    throw new Error("Error Connecting to Mongo");
-  }
   if (!process.env.NATS_CLUSTER_ID) {
     throw new Error("NATS_CLUSTER_ID not defined");
   }
