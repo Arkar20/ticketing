@@ -1,6 +1,6 @@
 import { Subjects } from "./index";
 interface ExpirationCompleteType {
-  subject: Subjects.ExpirationComplete;
+  subject: Subjects;
   data: {
     user_id: string;
   };

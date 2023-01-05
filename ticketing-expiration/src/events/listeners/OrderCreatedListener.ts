@@ -23,10 +23,10 @@ class OrderCreatedListener extends Listener<OrderCreateType> {
     await expirationQueue.add(
       {
         user_id: data.id,
-      },
-      {
-        delay,
       }
+      // {
+      //   delay,
+      // }
     );
 
     msg.ack();

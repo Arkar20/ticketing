@@ -1,4 +1,6 @@
 import Queue from "bull";
+import { ExpirationCompletePublisher } from "../events/publisher";
+import { natsWrapper } from "../nats-connect";
 
 interface Payload {
   user_id: string;
@@ -10,7 +12,9 @@ const expirationQueue = new Queue<Payload>("expiration:queue", {
 });
 
 expirationQueue.process(async (job) => {
-  console.log("should be display after 10s", job.data.user_id);
+  new ExpirationCompletePublisher(natsWrapper.stan).publish({
+    user_id: job.data.user_id,
+  });
 });
 
 export { expirationQueue };
