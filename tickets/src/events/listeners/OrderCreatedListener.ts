@@ -9,7 +9,7 @@ import { Ticket } from "../../model";
 import { TicketUpdatedPublisher } from "../publisher/TicketUpdatedPublisher";
 
 class OrderCreatedListener extends Listener<OrderCreateType> {
-  queueGroupName = "order:service";
+  queueGroupName = "order-service";
   type = Subjects.OrderCreated;
 
   async onMessage(data: OrderCreateType["data"], msg: Message) {
@@ -18,10 +18,6 @@ class OrderCreatedListener extends Listener<OrderCreateType> {
       data
     );
     const ticket = await Ticket.findById(data.ticket.id);
-    console.log(
-      "🚀 ~ file: OrderCreatedListener.ts:17 ~ OrderCreatedListener ~ onMessage ~ ticket",
-      ticket
-    );
 
     if (!ticket) {
       throw new BadRequest("Ticket Not Found");
@@ -37,10 +33,6 @@ class OrderCreatedListener extends Listener<OrderCreateType> {
       version: updatedTicket.version,
       order_id: updatedTicket.order_id,
     };
-    console.log(
-      "🚀 ~ file: OrderCreatedListener.ts:45 ~ OrderCreatedListener ~ onMessage ~ passData",
-      passData
-    );
 
     new TicketUpdatedPublisher(this.stan).publish(passData);
     msg.ack();

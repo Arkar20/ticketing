@@ -10,9 +10,13 @@ import { TicketUpdatedPublisher } from "../publisher/TicketUpdatedPublisher";
 
 class OrderCancelledListener extends Listener<OrderCancelType> {
   type = Subjects.OrderCancelled;
-  queueGroupName = "order:service";
+  queueGroupName = "order-service";
 
   async onMessage(data: OrderCancelType["data"], msg: Message) {
+    console.log(
+      "🚀 ~ file: OrderCancelledListener.ts:16 ~ OrderCancelledListener ~ onMessage ~ data",
+      data
+    );
     const ticket = await Ticket.findById(data.ticket.id);
 
     if (!ticket) {
