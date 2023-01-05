@@ -1,6 +1,7 @@
 import {
   ExpirationCompleteType,
   Listener,
+  OrderStatus,
   Subjects,
 } from "@jeffery_microservice/common";
 import { version } from "mongoose";
@@ -14,13 +15,17 @@ class ExpirationCompleteListener extends Listener<ExpirationCompleteType> {
   queueGroupName = "order-service";
 
   async onMessage(data: ExpirationCompleteType["data"], msg: Message) {
+    console.log(
+      "🚀 ~ file: ExpirationListener.ts:17 ~ ExpirationCompleteListener ~ onMessage ~ data",
+      data.order_id
+    );
     const order = await Order.findById(data.order_id).populate("ticket");
 
     if (!order) {
       throw Error("Order not Found");
     }
 
-    await order.set({ status: Subjects.OrderCancelled }).save();
+    await order.set({ status: OrderStatus.Cancelled }).save();
 
     new OrderCancelledEvent(natsWrapper.stan).publish({
       id: order.id,
@@ -32,6 +37,8 @@ class ExpirationCompleteListener extends Listener<ExpirationCompleteType> {
         price: order.ticket.price,
       },
     });
+
+    msg.ack();
   }
 }
 export { ExpirationCompleteListener };
