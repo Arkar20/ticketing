@@ -4,6 +4,7 @@ import app from "./app";
 import {
   TicketCreatedListener,
   TicketUpdatedListener,
+  ExpirationCompleteListener,
 } from "./events/listeners";
 
 import { natsWrapper, natsWrapper as NatsWrapper } from "./nats-connect";
@@ -37,6 +38,7 @@ async function start() {
 
     new TicketCreatedListener(natsWrapper.stan).subscribe();
     new TicketUpdatedListener(natsWrapper.stan).subscribe();
+    new ExpirationCompleteListener(natsWrapper.stan).subscribe();
 
     //kill nats if error
     process.on("SIGINT", () => NatsWrapper.stan.close());
