@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticketing-payment-depl
+spec:
+  selector:
+    matchLabels:
+      app: ticketing-payment
+  template:
+    metadata:
+      labels:
+        app:  ticketing-payment
+    spec:
+      containers:
+      - name:  ticketing-payment
+        image: arkar20/ticketing-payment
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketing-payment-srv
+spec:
+  selector:
+    app: ticketing-payment
+  ports:
+  - port: 3000
+    targetPort: 3000
+
