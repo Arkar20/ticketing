@@ -1,6 +1,7 @@
 import { BadRequest } from "@jeffery_microservice/common";
 import mongoose from "mongoose";
 import app from "./app";
+import { OrderCreatedListener } from "./events/listener/OrderCreatedListener";
 
 import { natsWrapper, natsWrapper as NatsWrapper } from "./nats-connect";
 async function start() {
@@ -30,6 +31,7 @@ async function start() {
       console.log("NATS connection closed!");
       process.exit();
     });
+    new OrderCreatedListener(natsWrapper.stan).subscribe();
 
     //kill nats if error
     process.on("SIGINT", () => NatsWrapper.stan.close());

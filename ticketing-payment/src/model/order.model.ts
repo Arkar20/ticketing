@@ -4,14 +4,14 @@ import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 //for argurments types
 interface OrderAttrs {
   id: string;
-  version: string;
+  version: number;
   user_id: string;
   price: number;
-  status: OrderStatus;
+  status: string;
 }
 //for single doc typs
 interface OrderDoc extends mongoose.Document {
-  version: string;
+  version: number;
   user_id: string;
   price: number;
   status: OrderStatus;
@@ -53,6 +53,7 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
     _id: attrs.id,
     status: attrs.status,
     version: attrs.version,
+    price: attrs.price,
     user_id: attrs.user_id,
   });
 };
