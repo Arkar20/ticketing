@@ -25,6 +25,11 @@ class ExpirationCompleteListener extends Listener<ExpirationCompleteType> {
       throw Error("Order not Found");
     }
 
+    if (order.status === OrderStatus.Complete) {
+      console.log("order is already marked as complete");
+      return;
+    }
+
     await order.set({ status: OrderStatus.Cancelled }).save();
 
     new OrderCancelledEvent(natsWrapper.stan).publish({
