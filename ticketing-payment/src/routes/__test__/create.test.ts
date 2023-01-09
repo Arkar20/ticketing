@@ -123,10 +123,6 @@ it("creates a payment", async () => {
     .expect(200);
 
   const stripeCharge = (stripe.charges.create as jest.Mock).mock.calls[0][0];
-  console.log(
-    "🚀 ~ file: create.test.ts:126 ~ it ~ stripeCharge",
-    stripeCharge
-  );
 
   const payment = await Payment.findOne({
     order_id: order.id,

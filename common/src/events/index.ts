@@ -7,3 +7,4 @@ export * from "./types/order-status";
 export * from "./OrderCancelType";
 export * from "./OrderCreatedType";
 export * from "./ExpirationCompleteType";
+export * from "./PaymentCreateType";
