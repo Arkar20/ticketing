@@ -25,6 +25,12 @@ spec:
                 fieldPath: metadata.name
           - name: MONGO_URL
             value: "mongodb://payment-mongo-srv:27017/payments"
+          - name: STRIP_SECRET 
+            valueFrom: 
+              secretKeyRef:
+                name: stripe-secret
+                key: STRIPE_SECRET
+
           - name: JWT_SECRET
             valueFrom:
               secretKeyRef:
