@@ -6,15 +6,16 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Header currentUser={currentUser} />
-      <Component {...pageProps}></Component>;
+      <Component {...pageProps,currentUser}></Component>;
     </>
   );
 }
 App.getInitialProps = async (context) => {
-  if (context.Component.getInitialProps) {
-    context.Component.getInitialProps(context.ctx);
-  }
   const response = await axiosNext(context.ctx).get("/api/users/currentuser");
+  if (context.Component.getInitialProps) {
+    context.Component.getInitialProps(context.ctx,axiosNext,response.data.currentUser);
+  }
+
 
   return { pageProps: { ...response.data } };
 };
