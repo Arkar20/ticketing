@@ -8,10 +8,8 @@ export function Header({ currentUser }) {
   ]
     .filter((link) => link)
     .map((link, index) => (
-      <li style={{ padding: "10px" }}>
-        <Link key={index} href={link.href}>
-          {link.label}
-        </Link>
+      <li key={index} style={{ padding: "10px" }}>
+        <Link href={link.href}>{link.label}</Link>
       </li>
     ));
   return (
