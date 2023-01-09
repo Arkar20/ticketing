@@ -8,9 +8,9 @@ import {
 import express, { Request, Response } from "express";
 
 import { body } from "express-validator";
-import { Order } from "../model";
-
 import { stripe } from "../stripe";
+
+import { Order, Payment } from "../model";
 
 const router = express.Router();
 
@@ -45,7 +45,12 @@ router.post(
       description: "My First Test Charge",
     });
 
-    return res.status(200).send("hello");
+    const payment = await Payment.build({
+      stripe_id: charge.id,
+      order_id: order.id,
+    }).save();
+
+    return res.status(200).send(payment);
   }
 );
 

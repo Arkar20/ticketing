@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import request from "supertest";
 
 import app from "../../app";
-import { Order } from "../../model";
+import { Order, Payment } from "../../model";
 
 import { stripe } from "../../stripe";
 
@@ -100,4 +100,38 @@ it("charges with stripe", async () => {
   const stripeCharge = (stripe.charges.create as jest.Mock).mock.calls[0][0];
 
   expect(stripeCharge.amount / 100).toBe(order.price);
+});
+
+it("creates a payment", async () => {
+  const user_id = new mongoose.Types.ObjectId().toString();
+
+  const order = await Order.build({
+    id: new mongoose.Types.ObjectId().toString(),
+    price: 100,
+    status: OrderStatus.Created,
+    user_id,
+    version: 0,
+  }).save();
+
+  const response = await request(app)
+    .post("/api/payments")
+    .send({
+      token: "tok_visa",
+      order_id: order.id,
+    })
+    .set("Cookie", global.signin(user_id))
+    .expect(200);
+
+  const stripeCharge = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+  console.log(
+    "🚀 ~ file: create.test.ts:126 ~ it ~ stripeCharge",
+    stripeCharge
+  );
+
+  const payment = await Payment.findOne({
+    order_id: order.id,
+  });
+
+  expect(payment).not.toBeNull();
+  expect(payment!.order_id).toBe(order.id);
 });
