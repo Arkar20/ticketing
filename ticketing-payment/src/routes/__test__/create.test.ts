@@ -1,8 +1,11 @@
 import { OrderStatus } from "@jeffery_microservice/common";
 import mongoose from "mongoose";
 import request from "supertest";
+
 import app from "../../app";
 import { Order } from "../../model";
+
+import { stripe } from "../../stripe";
 
 it("route exists", async () => {
   const response = await request(app).post("/api/payments");
@@ -72,4 +75,29 @@ it("show error if the owner is not owned the order", async () => {
     .set("Cookie", global.signin(user_id));
 
   expect(responseSuccess.status).not.toBe(401);
+});
+
+it("charges with stripe", async () => {
+  const user_id = new mongoose.Types.ObjectId().toString();
+
+  const order = await Order.build({
+    id: new mongoose.Types.ObjectId().toString(),
+    price: 100,
+    status: OrderStatus.Created,
+    user_id,
+    version: 0,
+  }).save();
+
+  const response = await request(app)
+    .post("/api/payments")
+    .send({
+      token: "tok_visa",
+      order_id: order.id,
+    })
+    .set("Cookie", global.signin(user_id))
+    .expect(200);
+
+  const stripeCharge = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+
+  expect(stripeCharge.amount / 100).toBe(order.price);
 });

@@ -1,10 +1,10 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import app from "../app";
-import request from "supertest";
+
 import jwt from "jsonwebtoken";
 
 jest.mock("../nats-connect");
+jest.mock("../stripe.ts");
 
 let mongo: any;
 

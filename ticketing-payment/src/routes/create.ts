@@ -10,7 +10,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { Order } from "../model";
 
-import { stripe } from "../../stripe";
+import { stripe } from "../stripe";
 
 const router = express.Router();
 
@@ -39,12 +39,11 @@ router.post(
     }
 
     const charge = await stripe.charges.create({
-      amount: order.price * 1000,
+      amount: order.price * 100,
       currency: "usd",
       source: token,
-      description: "My First Test Charge ",
+      description: "My First Test Charge",
     });
-    console.log("🚀 ~ file: create.ts:47 ~ charge", charge);
 
     return res.status(200).send("hello");
   }
